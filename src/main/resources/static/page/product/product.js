@@ -1,6 +1,6 @@
 layui.use(['form','layer'],function(){
     var form = layui.form
-    layer = parent.layer === undefined ? layui.layer : top.layer,
+        layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery;
 
     //alert(JSON.stringify(layer));
@@ -150,18 +150,24 @@ layui.use(['form','layer'],function(){
     form.on("submit(addProduct)",function(data){
         var productIndex = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
 
-
+        $('#productId').val($("input[name='product']:checked").val());
+        $('#expensesId').val($("input[name='expenses']:checked").val());
 
         var checkboxEquipment = [];
         $.each($('input:checkbox[name="equipment"]:checked'),function(){
             checkboxEquipment.push($(this).val());
 
         })
+        $('#equipmentIds').val(checkboxEquipment);
+
         var checkboxGift = [];
         $.each($('input:checkbox[name="gift"]:checked'),function(){
             checkboxGift.push($(this).val());
 
         })
+        $('#giftIds').val(checkboxGift);
+
+
         var productInfo = '';
         productInfo = {
             'product' : $("input[name='product']:checked").val(),
@@ -171,6 +177,7 @@ layui.use(['form','layer'],function(){
         };
 
         $('#productInfo').val(JSON.stringify(productInfo));
+
 
         //将填写的用户信息存到session以便下次调取
         //window.sessionStorage.setItem("productInfoJson",JSON.stringify(productInfoJson));
@@ -194,6 +201,8 @@ layui.use(['form','layer'],function(){
             id:'productConfirm',
             content: "../product/productConfirm.html",
             success: function(layero, index){
+                //var body = layui.layer.getChildFrame('body', index);
+                //body.find("#equipmentIds").val("12333");  //登录名
                 setTimeout(function(){
                     layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
