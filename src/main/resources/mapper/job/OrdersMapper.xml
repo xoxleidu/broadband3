@@ -71,7 +71,7 @@
         FROM   order_product op
         WHERE  1=1 
         <if test="ordersNumber !='' and  ordersNumber!=null">
-        op.`orders_number`= #{ordersNumber}
+         and op.`orders_number`= #{ordersNumber}
         </if>
         GROUP BY  op.`type` ,op.`product_id`
     </select>
