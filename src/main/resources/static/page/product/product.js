@@ -1,6 +1,6 @@
 layui.use(['form','layer'],function(){
     var form = layui.form
-        layer = parent.layer === undefined ? layui.layer : top.layer,
+    layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery;
 
     //alert(JSON.stringify(layer));
@@ -11,7 +11,7 @@ layui.use(['form','layer'],function(){
     ///product/model/find
     ///product/gift/findByName
 
-	//页面初始化
+    //页面初始化
     var serverPath = "http://localhost:8080/broadband";
     $("#sysIdcard").val(parent.$('#idcard').val());
     //parent.parent.$("#hideCollectionId").val();//取得父页面之父页面的非动态生成的元素
@@ -60,7 +60,7 @@ layui.use(['form','layer'],function(){
 
     $.ajax({
         type: "post",
-        url: serverPath + "/product/equipment/findEquipment",
+        url: serverPath + "/product/model/find",
         data: JSON.stringify(findProductBase),
         contentType: "application/json;charset=utf-8",
         dataType: "json",
@@ -278,5 +278,5 @@ layui.use(['form','layer'],function(){
             }
         });*/
 
-	
+
 })

@@ -25,7 +25,11 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 				dataStr = data.contentManagement;
 				//重新渲染左侧菜单
 				tab.render();
-			}else if(json == "systemeSttings"){
+			}else if(json == "workOrderManagement"){
+                dataStr = data.workOrderManagement;
+                //重新渲染左侧菜单
+                tab.render();
+            }else if(json == "systemeSttings"){
 				dataStr = data.systemeSttings;
 				//重新渲染左侧菜单
 				tab.render();
