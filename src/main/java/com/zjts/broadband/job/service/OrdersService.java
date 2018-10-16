@@ -17,5 +17,5 @@ public interface OrdersService {
     APIResponse orderQuery(Page page,ReqOrderQuery reqOrderQuery)throws Exception;
     APIResponse orderDetailedQuery(Page<ReqOrderDetailed> page,ReqOrderDetailed reqOrderDetailed)throws Exception;
     APIResponse updateDiscount(ReqOrderDiscount reqOrderDiscount)throws Exception;
-
+  APIResponse ordersAll(Page page);
 }

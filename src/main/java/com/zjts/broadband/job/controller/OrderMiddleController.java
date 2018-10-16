@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.zjts.broadband.common.constant.CodeEnum;
 import com.zjts.broadband.common.controller.BaseController;
 import com.zjts.broadband.common.model.APIResponse;
+import com.zjts.broadband.common.model.BaseModel;
 import com.zjts.broadband.common.model.req.job.ReqAdd;
 import com.zjts.broadband.common.model.req.job.orders.*;
+import com.zjts.broadband.job.model.Community;
 import com.zjts.broadband.job.model.CustomerMessage;
 import com.zjts.broadband.job.service.OrdersService;
 import io.swagger.annotations.Api;
@@ -132,6 +134,18 @@ public class OrderMiddleController extends BaseController {
             return parameterVerification(bindingResult);
         try {
             return ordersService.updateDiscount(reqOrderDiscount);
+        }catch (Exception e){
+            return APIResponse.error(CodeEnum.ERROR,"查询失败");
+        }
+    }
+    @ApiOperation(value = "查询所有订单")
+    @RequestMapping(value = "/orders",method = RequestMethod.POST)
+    public APIResponse orders(@RequestBody BaseModel baseModel, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if (bindingResult.hasErrors())
+            return parameterVerification(bindingResult);
+        try {
+            Page page = new Page(baseModel.getCurrentPage(),baseModel.getPageSize());
+            return ordersService.ordersAll(page);
         }catch (Exception e){
             return APIResponse.error(CodeEnum.ERROR,"查询失败");
         }
