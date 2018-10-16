@@ -238,6 +238,16 @@ public class OrdersServiceImpl implements OrdersService {
         return APIResponse.success();
     }
 
+    @Override
+    public APIResponse ordersAll(Page page) {
+        List<Orders>communityList =ordersMapper.selectPage(page,null);
+
+        if (communityList.isEmpty()) {
+            return APIResponse.error(CodeEnum.SAVE_ERROR);
+        }
+        return APIResponse.success(communityList);
+    }
+
     /**
      * 生成随机的订单号
      */
