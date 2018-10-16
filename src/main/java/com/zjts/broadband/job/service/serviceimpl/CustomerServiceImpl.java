@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerMessage.setCreationTime(time);
         customerMessage.setStatus(0);
         Integer count=  customerMapper.selectCount(new EntityWrapper<CustomerMessage>().eq("idcard",customerMessage.getIdcard()));
-        if (count>0) {
+        if (count>0   ) {
             return APIResponse.error(CodeEnum.SAVE_ERROR);
         }else{
             Integer insert = customerMapper.insert(customerMessage);
