@@ -116,7 +116,8 @@ public class OrderMiddleController extends BaseController {
         if (bindingResult.hasErrors())
             return parameterVerification(bindingResult);
         try {
-            return ordersService.orderDetailedQuery(reqOrderDetailed);
+            Page<ReqOrderDetailed> page = new Page(reqOrderDetailed.getCurrentPage(),reqOrderDetailed.getPageSize());
+            return ordersService.orderDetailedQuery(page,reqOrderDetailed);
         }catch (Exception e){
             return APIResponse.error(CodeEnum.ERROR,"查询失败");
         }

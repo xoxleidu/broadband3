@@ -70,7 +70,7 @@ public class ProductController extends BaseController {
             return productService.findProductById(id);
         } catch (Exception e) {
             e.printStackTrace();
-            return APIResponse.error(CodeEnum.EXIT_ERROR);
+            return APIResponse.error(CodeEnum.FIND_NULL_ERROR);
         }
     }
 

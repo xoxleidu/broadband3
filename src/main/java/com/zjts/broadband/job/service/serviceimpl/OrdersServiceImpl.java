@@ -203,10 +203,15 @@ public class OrdersServiceImpl implements OrdersService {
      * @throws: Exception
      */
     @Override
-    public APIResponse orderDetailedQuery(ReqOrderDetailed reqOrderDetailed) throws Exception {
+    public APIResponse orderDetailedQuery(Page<ReqOrderDetailed> page,ReqOrderDetailed reqOrderDetailed) throws Exception {
         OrdersDetailed ordersDetailed = new OrdersDetailed();
         BeanUtils.copyProperties(reqOrderDetailed, ordersDetailed);
-        List<OrdersDetailed> orderDetailedQuery = ordersMapper.orderDetailedQuery(ordersDetailed);
+        List<OrdersDetailed> orderDetailedQuery =null;
+        if(reqOrderDetailed.getOrdersNumber()==null){
+            orderDetailedQuery = ordersMapper.orderDetailedQuery(ordersDetailed);
+        }else {
+            orderDetailedQuery = ordersMapper.orderDetailedQuery(ordersDetailed);
+        }
         if (orderDetailedQuery.isEmpty()) {
             return APIResponse.error(CodeEnum.FIND_NULL_ERROR);
         }
