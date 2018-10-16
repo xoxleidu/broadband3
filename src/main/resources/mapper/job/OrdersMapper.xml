@@ -37,7 +37,11 @@
         FROM `orders` o
         LEFT JOIN order_product r  ON o.order_number=r.orders_number
         LEFT JOIN  expenses e  ON e.id=r.product_id
-        WHERE o.customer_id=#{customerId} AND  e.Name=#{expensesName}   and  r.type=2
+        WHERE o.customer_id=#{customerId}
+        <if test="expensesName!=null and expensesName!=''">
+        AND  e.Name=#{expensesName}
+        </if>
+        and  r.type=2
     </select>
 
 
