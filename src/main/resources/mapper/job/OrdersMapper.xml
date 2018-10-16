@@ -70,8 +70,8 @@
         SELECT    op.`orders_number`,op.`type`,op.`product_id`,COUNT(op.`product_id`) number ,op.`discountmoney`
         FROM   order_product op
         WHERE  1=1 
-        <if test="ordersNumber !='string'">
-        op.`orders_number`= #{ordersNumber}
+        <if test="ordersNumber !='' and  ordersNumber!=null">
+         and op.`orders_number`= #{ordersNumber}
         </if>
         GROUP BY  op.`type` ,op.`product_id`
     </select>
