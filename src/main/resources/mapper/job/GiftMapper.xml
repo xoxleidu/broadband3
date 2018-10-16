@@ -17,7 +17,7 @@
         select * from gift
         where 1=1
         <if test="name !=null">
-            and name like #{name,jdbcType=VARCHAR}
+            and name LIKE CONCAT(#{name},'%')
         </if>
         <if test="id !=null">
             and `id`=#{id,jdbcType=INTEGER}

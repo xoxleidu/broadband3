@@ -1,5 +1,7 @@
 package com.zjts.broadband.common.model.req.job.orders;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.zjts.broadband.common.model.BaseModel;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -12,9 +14,8 @@ import javax.validation.constraints.NotNull;
  * @Version1.0
  **/
 
-public class ReqOrderDetailed {
-    @Length(max = 20 ,min = 20,message = "订单长度错误")
-    @NotNull(message = "订单编号不能为空")
+public class ReqOrderDetailed  extends BaseModel{
+
     private String ordersNumber;//订单编号
 
     public String getOrdersNumber() { return ordersNumber; }

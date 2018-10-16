@@ -41,11 +41,16 @@ public class CustomerServiceImpl implements CustomerService {
         customerMessage.setCreationTime(time);
         customerMessage.setStatus(0);
         Integer count=  customerMapper.selectCount(new EntityWrapper<CustomerMessage>().eq("idcard",customerMessage.getIdcard()));
-        Integer insert = customerMapper.insert(customerMessage);
-        if (insert != 1 || count>0) {
+        if (count>0   ) {
             return APIResponse.error(CodeEnum.SAVE_ERROR);
+        }else{
+            Integer insert = customerMapper.insert(customerMessage);
+            if (insert != 1 ) {
+                return APIResponse.error(CodeEnum.SAVE_ERROR);
+            }
+            return APIResponse.success();
         }
-        return APIResponse.success();
+
     }
     /**
      * 修改客户信息
