@@ -18,9 +18,11 @@
 		<form class="layui-form">
 			<div class="layui-input-inline">
 				<select name="searchSelect" class="searchSelect">
-					<option value="1">身份证号码</option>
-					<option value="2">客户姓名</option>
-					<option value="3">客户手机号码</option>
+					<option value="1">客户姓名</option>
+					<option value="2">客户手机号码</option>
+					<!--<option value="3">类型</option>
+					<option value="3">完成状态</option>
+					<option value="3">维修类型</option>-->
 				</select>
 			</div>
 			<div class="layui-inline">
@@ -29,24 +31,25 @@
 				</div>
 				<a class="layui-btn search_btn" data-type="reload">搜索</a>
 			</div>
-			<div class="layui-inline">
+
+			<!--<div class="layui-inline">
 				<a class="layui-btn layui-btn-normal addNews_btn">添加用户</a>
 			</div>
 			<div class="layui-inline">
 				<a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
-			</div>
+			</div>-->
 		</form>
 	</blockquote>
-	<table id="customerList" lay-filter="customerList"></table>
+	<table id="dataList" lay-filter="dataList"></table>
 
 	<!--操作-->
 	<script type="text/html" id="customer_order">
 		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-		<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="info">订单详情</a>
-		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+		<!--<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="info">订单详情</a>-->
+		<!--<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>-->
 	</script>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="customerList.js"></script>
+<script type="text/javascript" src="workOrderList.js"></script>
 </body>
 </html>

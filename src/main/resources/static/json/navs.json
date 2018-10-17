@@ -19,13 +19,13 @@
 		{
 			"title": "工单派遣",
 			"icon": "&#xe612;",
-			"href": "page/user/workOrderDispatch.html",
+			"href": "page/order/workOrderList.html",
 			"spread": false
 		},
 		{
-			"title": "安装详情",
+			"title": "小区管理",
 			"icon": "icon-vip",
-			"href": "page/user/workOrderInstallation.html",
+			"href": "page/order/communityList.html",
 			"spread": false
 		}
 	],
@@ -68,8 +68,31 @@
 			"icon": "icon-mokuai",
 			"href": "page/doc/navDoc.html",
 			"spread": false
+		},{
+			"title": "三级菜单",
+			"icon": "icon-mokuai",
+			"href": "page/doc/navDoc.html",
+			"spread": false
+		},{
+			"title": "三级菜单",
+			"icon": "icon-mokuai",
+			"href": "page/doc/navDoc.html",
+			"spread": false
+		},{
+			"title": "三级菜单",
+			"icon": "icon-mokuai",
+			"href": "page/doc/navDoc.html",
+			"spread": false
+		},{
+			"title": "三级菜单",
+			"icon": "icon-mokuai",
+			"href": "page/doc/navDoc.html",
+			"spread": false
+		},{
+			"title": "三级菜单",
+			"icon": "icon-mokuai",
+			"href": "page/doc/navDoc.html",
+			"spread": false
 		}
 	]
 }
-
-

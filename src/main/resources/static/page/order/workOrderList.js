@@ -1,23 +1,24 @@
 var allCurrentPage = 1;
 var allpageSize = 50;
 
-layui.use(['form','layer','table','laytpl','laypage'],function(){
+layui.use(['form','layer','table','laytpl','element'],function(){
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
         laytpl = layui.laytpl,
-        laypage = layui.laypage,
+        element = layui.element,
         table = layui.table;
 
     //页面初始化
     var serverPath = "http://localhost:8080/broadband";
-    var customerUrl = serverPath + "/customer/customerMessage/queryAllCustomer";
+    var url = serverPath + "/workOrder/query";
 
     var pageInfo = {
         "currentPage": 1,
-        "pageSize": 10
+        "pageSize": 50
     };
-    ajaxPost(customerUrl,pageInfo);
+
+    ajaxPost(url,pageInfo);
 
 
     function ajaxPost(url,data) {
@@ -39,37 +40,31 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
 
     function openTable(data) {
         var tableIns = table.render({
-            elem: '#customerList',
+            elem: '#dataList',
             data: data.result.records,
             //cellMinWidth : 95,
             page : true,
             height : "full-125",
             limit : 10,
             //limits : [10,15,20,25],
-            id : "customerListTable",
+            id : "workOrderListTable",
             cols : [[
-                {field: 'customerName', title: '姓名', width:100},
-                {field: 'sex', title: '性别', align:'center',width:60},
-                {field: 'idcard', title: '身份证号', width:200},
-                {field: 'tel', title: '家庭电话', width:140},
-                {field: 'mobile', title: '手机号码', width:140},
-                {field: 'address', title: '证件地址', width:200},
-                {field: 'contacts', title: '联系人', width:100},
-                {field: 'contact_mobile', title: '联系人电话', width:140},
-                {field: 'type', title: '客户类型', width:100},
-                {field: 'creation_time', title: '创建时间', width:140},
-                {field: 'status', title: '状态', width:60},
-                {field: 'sys_user_id', title: '操作者', width:100},
+                {field: 'customerName', title: '客户姓名', width:100},
+                {field: 'theRepairOrderId', title: '工单编号', width:100},
+                {field: 'mobile', title: '联系电话', width:140},
+                {field: 'appointmentDate', title: '预约时间', width:200},
+                {field: 'userId', title: '安装维修人员及其联系电话', width:200},
+                {field: 'type', title: '类型', width:100},//类型（1 维修，2 安装）
+                {field: 'maintenanceType', title: '维修类型', width:100},//维修类型（1 宽带，2 电视，3 固话）
+                {field: 'maintenanceReason', title: '维修原因', width:160},
+                {field: 'installState', title: '完成状态', width:100},//完成状态（1 未完成，2 完成，3 确认完成）
+                {field: 'orderNumber', title: '订单编号', width:100},//（ 关联安装地址，产品名称，产品信息 ）
+                {field: 'note', title: '备注', width:100},
                 {title: '操作',toolbar: '#customer_order'},
             ]]
         });
 
-
-
-
-
-        //return tableIns;
-
+        return tableIns;
     }
 
 
@@ -84,24 +79,38 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
             if (i == 1) {
                 searchInfo = {
                     "currentPage": 1,
-                    "idcard": $(".searchVal").val(),
+                    "customerName": $(".searchVal").val(),
                     "pageSize": 50
                 };
             } else if (i == 2) {
                 searchInfo = {
                     "currentPage": 1,
-                    "customerName": $(".searchVal").val(),
-                    "pageSize": 50
-                };
-            } else if (i == 3) {
-                searchInfo = {
-                    "currentPage": 1,
                     "mobile": $(".searchVal").val(),
                     "pageSize": 50
                 };
+            } /*else if (i == 3) {
+                searchInfo = {
+                    "currentPage": 1,
+                    "type": $(".searchVal").val(),
+                    "pageSize": 50
+                };
             }
+            else if (i == 4) {
+                searchInfo = {
+                    "currentPage": 1,
+                    "installState": $(".searchVal").val(),
+                    "pageSize": 50
+                };
+            }
+            else if (i == 5) {
+                searchInfo = {
+                    "currentPage": 1,
+                    "maintenanceType": $(".searchVal").val(),
+                    "pageSize": 50
+                };
+            }*/
             //alert(JSON.stringify(searchInfo));
-            ajaxPost(customerUrl,searchInfo);
+            ajaxPost(url,searchInfo);
             tableIns.reload();
 
         }else{
@@ -111,12 +120,9 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
 
     //添加用户
     function addUser(edit){
-        var title = '添加用户';
-        var content = 'customerAdd.html';
-        if(edit){
-            title = '修改用户';
-            content = 'customerUpdata.html';
-        }
+        var title = '修改工单';
+        var content = 'workOrderUpdata.html';
+
         var index = layui.layer.open({
             title : title,
             type : 2,
@@ -125,19 +131,17 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
                         body.find("#id").val(edit.id);  //登录名
-                        body.find("#customerName").val(edit.customerName);  //登录名
+                        body.find("#appointmentDate").val(edit.appointmentDate);  //登录名
                         //body.find("#sex input[value="+edit.sex+"]").prop("checked","checked");  //性别
-                        body.find("#idcard").val(edit.idcard);  //会员等级
-                        body.find("#tel").val(edit.tel);  //会员等级
-                        body.find("#mobile").val(edit.mobile);  //邮箱
-                        body.find("#address").val(edit.address);    //用户状态
-                        body.find("#contacts").val(edit.contacts);  //会员等级
-                        body.find("#contactMobile").val(edit.contactMobile);    //用户状态
+                        body.find("#userId").val(edit.userId);  //会员等级
+                        body.find("#type").val(edit.type);  //会员等级
+                        body.find("#maintenanceType").val(edit.maintenanceType);  //邮箱
+                        body.find("#maintenanceReason").val(edit.maintenanceReason);    //用户状态
+                        body.find("#installState").val(edit.installState);  //会员等级
+                        body.find("#note").val(edit.note);    //用户状态
                         //body.find("#type input[value="+edit.type+"]").prop("checked","checked");  //性别
-                        body.find("#creationTime").val(edit.creationTime);    //用户状态
-                        body.find("#status").val(edit.status);    //用户状态
-                        body.find("#sysUserId").val(edit.sysUserId);    //用户状态
-                        body.find("#name").text(edit.name);    //用户简介
+                        body.find("#mobile").val(edit.mobile);    //用户状态
+                        body.find("#customerName").val(edit.customerName);    //用户状态
                     form.render();
                 }
                 setTimeout(function(){
@@ -188,11 +192,11 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
 
 
     //列表操作
-    table.on('tool(customerList)', function(obj){
+    table.on('tool(dataList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
         if(layEvent === 'edit'){ //编辑
-            //alert(JSON.stringify(data));
+            alert(JSON.stringify(data));
             addUser(data);
         }else if (layEvent === 'info'){
 
@@ -220,20 +224,6 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
             });
         }else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此用户？',{icon:3, title:'提示信息'},function(index){
-                    var delData = {
-                        "id": data.id
-                    };
-                    $.ajax({
-                        type: "post",
-                        url: serverPath + '/customer/customerMessage/delete',
-                        data: JSON.stringify(delData),
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        success: function(res){
-                            layer.close(index);
-                            window.location.reload();
-                        }
-                    })
                 // $.get("删除文章接口",{
                 //     newsId : data.newsId  //将需要删除的newsId作为参数传入
                 // },function(data){

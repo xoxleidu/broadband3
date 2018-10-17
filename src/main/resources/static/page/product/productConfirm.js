@@ -5,7 +5,7 @@ layui.use(['form','layer','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-
+alert(parent.$("#productId").val());
 
     //页面初始化
     var serverPath = "http://localhost:8080/broadband";

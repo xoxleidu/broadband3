@@ -1,8 +1,9 @@
-layui.use(['form','layer','table','laytpl'],function(){
+layui.use(['form','layer','table','laytpl','element'],function(){
     var form = layui.form,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         $ = layui.jquery,
         laytpl = layui.laytpl,
+        element = layui.element,
         table = layui.table;
 
     function getUrlParam(name) {
@@ -13,10 +14,12 @@ layui.use(['form','layer','table','laytpl'],function(){
         return null; //返回参数值
     }
     var customerId = getUrlParam('customerId');
+    alert(customerId);
 
     //页面初始化
     var serverPath = "http://localhost:8080/broadband";
-    var customerOrderUrl = serverPath + "/order/findSelectAll";
+    //var customerOrderUrl = serverPath + "/order/findSelectAll";
+    var customerOrderUrl = serverPath + "/order/orderQuery";
     var allOrderUrl = serverPath + "/order/orders";
 
     var findData = '';
@@ -31,10 +34,9 @@ layui.use(['form','layer','table','laytpl'],function(){
     } else {
         findData = {
             "currentPage": 1,
-            "customerId": Number(customerId),
+            "id": Number(customerId),
             "pageSize": 50
         };
-        alert(JSON.stringify(findData));
         ajaxPost(customerOrderUrl,findData);
     }
     //alert(customerId);
@@ -52,27 +54,31 @@ layui.use(['form','layer','table','laytpl'],function(){
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function(res){
-                alert(JSON.stringify(res.result));
-                //openTable(res);
-                //return res.result;
+                openTable(res);
             }
         })
     }
     
     function openTable(data) {
         var tableIns = table.render({
-            elem: '#customerOrderList',
+            elem: '#orderList',
             data: data.result.records,
             cellMinWidth : 95,
             page : true,
             height : "full-125",
-            limit : 1,
+            limit : 10,
             //limits : [10,15,20,25],
-            id : "customerOrderListTable",
+            id : "orderListTable",
 
             
             cols : [[
-                {field: 'customerName', title: '文章标题', width:350}
+                {field: 'productId', title: 'ID', width:10},
+                {field: 'orderNumber', title: '订单号', width:350},
+                /*{field: 'money', title: '订单金额', width:350},
+                {field: 'createTime', title: '订单时间', width:350},
+                {field: 'projectType', title: '产品类型', width:350},//产品类型 1:套餐2资费3设备4赠品
+                {field: 'type', title: '状态', width:350}//状态(0.在线/激活,1.退费/未激活,2.过期)*/
+                {toolbar: '#order_bar', title: '操作', width:80},
             ]]
         });
     }
@@ -190,12 +196,15 @@ layui.use(['form','layer','table','laytpl'],function(){
     })
 
     //列表操作
-    table.on('tool(newsList)', function(obj){
+    table.on('tool(orderList)', function(obj){
         var layEvent = obj.event,
             data = obj.data;
 
         if(layEvent === 'edit'){ //编辑
-            addNews(data);
+            alert(JSON.stringify(data));
+            $("#productId").val(data.productId);
+            OpenFrame();
+
         } else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此文章？',{icon:3, title:'提示信息'},function(index){
                 // $.get("删除文章接口",{
@@ -209,5 +218,29 @@ layui.use(['form','layer','table','laytpl'],function(){
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
         }
     });
+
+
+    function OpenFrame() {
+        var productConfirmIndex = layui.layer.open({
+            title : "产品选择",
+            type : 2,
+            id:'productConfirm',
+            content: "../product/productConfirm.html",
+            success: function(layero, index){
+                //var body = layui.layer.getChildFrame('body', index);
+                //body.find("#equipmentIds").val("12333");  //登录名
+                setTimeout(function(){
+                    layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                },1000)
+            }
+        })
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function(){
+            layui.layer.full(productConfirmIndex);
+        })
+        layui.layer.full(productConfirmIndex);
+    }
 
 })
