@@ -6,18 +6,45 @@ layui.use(['form','layer','table','laytpl','element'],function(){
         element = layui.element,
         table = layui.table;
 
-
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
+    var customerId = getUrlParam('customerId');
+    alert(customerId);
 
     //页面初始化
     var serverPath = "http://localhost:8080/broadband";
+    //var customerOrderUrl = serverPath + "/order/findSelectAll";
+    var customerOrderUrl = serverPath + "/order/orderQuery";
     var allOrderUrl = serverPath + "/order/orders";
 
-    var findData = {
-        "currentPage": 1,
-        "pageSize": 100
-    };
+    var findData = '';
 
-    ajaxPost(allOrderUrl,findData);
+
+    if (customerId == '' || customerId == undefined || customerId == null) {
+        findData = {
+            "currentPage": 1,
+            "pageSize": 50
+        };
+        ajaxPost(allOrderUrl,findData);
+    } else {
+        findData = {
+            "currentPage": 1,
+            "id": Number(customerId),
+            "pageSize": 50
+        };
+        ajaxPost(customerOrderUrl,findData);
+    }
+    //alert(customerId);
+
+
+
+    //alert(JSON.stringify(findData));
+
 
     function ajaxPost(url,data) {
         $.ajax({
@@ -27,15 +54,15 @@ layui.use(['form','layer','table','laytpl','element'],function(){
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function(res){
-                //alert(JSON.stringify(res));
                 openTable(res);
             }
         })
     }
+    
     function openTable(data) {
         var tableIns = table.render({
             elem: '#orderList',
-            data: data.result,
+            data: data.result.records,
             cellMinWidth : 95,
             page : true,
             height : "full-125",
@@ -43,14 +70,15 @@ layui.use(['form','layer','table','laytpl','element'],function(){
             //limits : [10,15,20,25],
             id : "orderListTable",
 
+            
             cols : [[
-                {field: 'customerId', title: 'ID', width:10},
+                {field: 'productId', title: 'ID', width:10},
                 {field: 'orderNumber', title: '订单号', width:350},
                 /*{field: 'money', title: '订单金额', width:350},
                 {field: 'createTime', title: '订单时间', width:350},
                 {field: 'projectType', title: '产品类型', width:350},//产品类型 1:套餐2资费3设备4赠品
                 {field: 'type', title: '状态', width:350}//状态(0.在线/激活,1.退费/未激活,2.过期)*/
-                {toolbar: '#order_bar', title: '操作', fixed:"right"},
+                {toolbar: '#order_bar', title: '操作', width:80},
             ]]
         });
     }

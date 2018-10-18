@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>文章列表--layui后台管理模板 2.0</title>
+	<title>用户中心--layui后台管理模板 2.0</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,14 +14,11 @@
 </head>
 <body class="childrenBody">
 <form class="layui-form">
-	<input id="productId" type="hidden">
 	<blockquote class="layui-elem-quote quoteBox">
 		<form class="layui-form">
 			<div class="layui-input-inline">
 				<select name="searchSelect" class="searchSelect">
-					<option value="1">身份证号码</option>
-					<option value="2">客户姓名</option>
-					<option value="3">客户手机号码</option>
+					<option value="1">号码</option>
 				</select>
 			</div>
 			<div class="layui-inline">
@@ -31,20 +28,24 @@
 				<a class="layui-btn search_btn" data-type="reload">搜索</a>
 			</div>
 			<div class="layui-inline">
-				<a class="layui-btn layui-btn-normal addNews_btn">添加用户</a>
+				<a class="layui-btn layui-btn-normal addNews_btn">添加号码</a>
 			</div>
-			<div class="layui-inline">
+			<!--<div class="layui-inline">
 				<a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
-			</div>
+			</div>-->
 		</form>
 	</blockquote>
-	<table class="layui-hide" id="orderList" lay-filter="orderList"></table>
+	<table id="customerList" lay-filter="customerList"></table>
+
+	<!--<a href="javascript:;" data-url="page/order/orderList.html" class="testbtnbtn">测试</a>-->
+
 	<!--操作-->
-	<script type="text/html" id="order_bar">
-		<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+	<script type="text/html" id="customer_order">
+		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 	</script>
+
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="orderList.js"></script>
+<script type="text/javascript" src="numberPhoneList.js"></script>
 </body>
 </html>

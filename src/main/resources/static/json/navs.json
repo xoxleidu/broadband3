@@ -5,29 +5,31 @@
 			"icon": "icon-text",
 			"href": "page/order/orderList.html",
 			"spread": false
+		},{
+			"title": "工单列表",
+			"icon": "&#xe612;",
+			"href": "page/order/workOrderList.html",
+			"spread": false
+		},{
+			"title": "固话列表",
+			"icon": "&#xe612;",
+			"href": "page/product/numberPhoneList.html",
+			"spread": false
 		}
 	],
 	"memberCenter": [
 		{
-			"title": "客户列表",
+			"title": "新客户列表",
 			"icon": "&#xe612;",
 			"href": "page/customer/customerList.html",
 			"spread": false
-		}
-	],
-	"workOrderManagement":[
-		{
-			"title": "工单派遣",
+		},{
+			"title": "老客户列表",
 			"icon": "&#xe612;",
-			"href": "page/order/workOrderList.html",
-			"spread": false
-		},
-		{
-			"title": "小区管理",
-			"icon": "icon-vip",
-			"href": "page/order/communityList.html",
+			"href": "page/customer/customerOldList.html",
 			"spread": false
 		}
+
 	],
 	"systemeSttings": [
 		{
@@ -68,31 +70,35 @@
 			"icon": "icon-mokuai",
 			"href": "page/doc/navDoc.html",
 			"spread": false
-		},{
-			"title": "三级菜单",
-			"icon": "icon-mokuai",
-			"href": "page/doc/navDoc.html",
+		}
+	],
+	"goodsManagement": [
+		{
+			"title": "资费管理",
+			"icon": "icon-mokuai1",
+			"href": "page/expenses/expenses.html",
 			"spread": false
 		},{
-			"title": "三级菜单",
-			"icon": "icon-mokuai",
-			"href": "page/doc/navDoc.html",
+			"title": "设备管理",
+			"icon": "icon-mokuai2",
+			"href": "page/product/productLists.html",
 			"spread": false
 		},{
-			"title": "三级菜单",
-			"icon": "icon-mokuai",
-			"href": "page/doc/navDoc.html",
+			"title": "赠品管理",
+			"icon": "icon-mokuai3",
+			"href": "page/gift/gift.html",
 			"spread": false
 		},{
-			"title": "三级菜单",
+			"title": "ip管理",
 			"icon": "icon-mokuai",
-			"href": "page/doc/navDoc.html",
+			"href": "page/ip/ip.html",
 			"spread": false
 		},{
-			"title": "三级菜单",
+			"title": "小区管理",
 			"icon": "icon-mokuai",
-			"href": "page/doc/navDoc.html",
+			"href": "page/community/community.html",
 			"spread": false
 		}
 	]
+
 }

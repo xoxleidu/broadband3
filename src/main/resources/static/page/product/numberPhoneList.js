@@ -11,7 +11,7 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
 
     //页面初始化
     var serverPath = "http://localhost:8080/broadband";
-    var customerUrl = serverPath + "/customer/customerMessage/queryAllCustomer";
+    var customerUrl = serverPath + "/product/phoneNumber/find";
 
     var pageInfo = {
         "currentPage": 1,
@@ -48,19 +48,9 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
             //limits : [10,15,20,25],
             id : "customerListTable",
             cols : [[
-                {field: 'customerName', title: '姓名', width:100},
-                {field: 'sex', title: '性别', align:'center',width:60},
-                {field: 'idcard', title: '身份证号', width:200},
-                {field: 'tel', title: '家庭电话', width:140},
-                {field: 'mobile', title: '手机号码', width:140},
-                {field: 'address', title: '证件地址', width:200},
-                {field: 'contacts', title: '联系人', width:100},
-                {field: 'contact_mobile', title: '联系人电话', width:140},
-                {field: 'type', title: '客户类型', width:100},
-                {field: 'creation_time', title: '创建时间', width:140},
+                {field: 'phoneNumber', title: '号码', width:200},
                 {field: 'status', title: '状态', width:60},
-                {field: 'sys_user_id', title: '操作者', width:100},
-                {title: '操作',toolbar: '#customer_order'},
+                {title: '操作',toolbar: '#customer_order',fixed:"right"},
             ]]
         });
 
@@ -78,28 +68,12 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
     $(".search_btn").on("click",function(){
         if($(".searchVal").val() != ''){
 
-            var i = $(".searchSelect").val();
-            var searchInfo = '';
 
-            if (i == 1) {
-                searchInfo = {
+                var searchInfo = {
                     "currentPage": 1,
-                    "idcard": $(".searchVal").val(),
+                    "phoneNumber": $(".searchVal").val(),
                     "pageSize": 50
                 };
-            } else if (i == 2) {
-                searchInfo = {
-                    "currentPage": 1,
-                    "customerName": $(".searchVal").val(),
-                    "pageSize": 50
-                };
-            } else if (i == 3) {
-                searchInfo = {
-                    "currentPage": 1,
-                    "mobile": $(".searchVal").val(),
-                    "pageSize": 50
-                };
-            }
             //alert(JSON.stringify(searchInfo));
             ajaxPost(customerUrl,searchInfo);
             tableIns.reload();
@@ -111,11 +85,11 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
 
     //添加用户
     function addUser(edit){
-        var title = '添加用户';
-        var content = 'customerAdd.html';
+        var title = '添加号码';
+        var content = 'numberPhoneAdd.html';
         if(edit){
-            title = '修改用户';
-            content = 'customerUpdata.html';
+            title = '修改号码';
+            content = 'numberPhoneUpdata.html';
         }
         var index = layui.layer.open({
             title : title,
@@ -125,19 +99,9 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
                 var body = layui.layer.getChildFrame('body', index);
                 if(edit){
                         body.find("#id").val(edit.id);  //登录名
-                        body.find("#customerName").val(edit.customerName);  //登录名
+                        body.find("#phoneNumber").val(edit.phoneNumber);  //登录名
                         //body.find("#sex input[value="+edit.sex+"]").prop("checked","checked");  //性别
-                        body.find("#idcard").val(edit.idcard);  //会员等级
-                        body.find("#tel").val(edit.tel);  //会员等级
-                        body.find("#mobile").val(edit.mobile);  //邮箱
-                        body.find("#address").val(edit.address);    //用户状态
-                        body.find("#contacts").val(edit.contacts);  //会员等级
-                        body.find("#contactMobile").val(edit.contactMobile);    //用户状态
-                        //body.find("#type input[value="+edit.type+"]").prop("checked","checked");  //性别
-                        body.find("#creationTime").val(edit.creationTime);    //用户状态
-                        body.find("#status").val(edit.status);    //用户状态
-                        body.find("#sysUserId").val(edit.sysUserId);    //用户状态
-                        body.find("#name").text(edit.name);    //用户简介
+                        body.find("#status").val(edit.status);  //会员等级
                     form.render();
                 }
                 setTimeout(function(){
@@ -238,7 +202,7 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
             });
         }else if(layEvent === 'del'){ //删除
             layer.confirm('确定删除此用户？',{icon:3, title:'提示信息'},function(index){
-                    var delData = {
+                    /*var delData = {
                         "id": data.id
                     };
                     $.ajax({
@@ -251,7 +215,7 @@ layui.use(['form','layer','table','laytpl','laypage'],function(){
                             layer.close(index);
                             window.location.reload();
                         }
-                    })
+                    })*/
                 // $.get("删除文章接口",{
                 //     newsId : data.newsId  //将需要删除的newsId作为参数传入
                 // },function(data){
